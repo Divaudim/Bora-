@@ -3,6 +3,7 @@ name: Deploy GitHub Pages
 on:
   push:
     branches:
+      - main
       - claude/add-claude-documentation-X1XBg
   workflow_dispatch:
 
