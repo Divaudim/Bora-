@@ -1,0 +1,17 @@
+{
+  "name": "bora-tech",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Loja de eletrônicos Bora Tech — site estático + função serverless Mercado Pago",
+  "type": "module",
+  "scripts": {
+    "dev": "vercel dev",
+    "start": "python3 -m http.server 8000"
+  },
+  "dependencies": {
+    "mercadopago": "^2.0.15"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

@@ -3,15 +3,23 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Bora Tech — Loja de eletrônicos</title>
-  <meta name="description" content="Bora Tech: os melhores gadgets, fones, teclados e acessórios com entrega rápida." />
+  <title>Bora Tech — Eletrônicos com até 40% OFF | Checkout seguro</title>
+  <meta name="description" content="Loja oficial Bora Tech. Eletrônicos com até 40% OFF, 12x sem juros no cartão, PIX com desconto extra e entrega pra todo Brasil. Pagamento processado com Mercado Pago." />
+  <meta name="theme-color" content="#0a0a0f" />
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+  <div class="topbar" role="note">
+    <div class="container topbar-inner">
+      <span class="pulse"></span>
+      <span><strong>MEGA PROMO</strong> — 40% OFF em TUDO + frete grátis acima de R$ 299 • <strong>Só hoje!</strong></span>
+    </div>
+  </div>
+
   <header class="site-header">
     <div class="container header-inner">
       <a href="#" class="logo" aria-label="Bora Tech — início">
@@ -19,10 +27,15 @@
         <span class="logo-text">Bora<span class="logo-accent">Tech</span></span>
       </a>
 
+      <form class="search" role="search" onsubmit="return false;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input id="search-input" type="search" placeholder="Buscar fones, smartwatch, teclado..." aria-label="Buscar produtos" />
+      </form>
+
       <nav class="nav" aria-label="Principal">
         <a href="#catalogo">Catálogo</a>
         <a href="#entrega">Entrega</a>
-        <a href="#suporte">Suporte</a>
+        <a href="#faq">FAQ</a>
       </nav>
 
       <button class="cart-button" id="cart-open" aria-label="Abrir carrinho">
@@ -38,12 +51,18 @@
   <main>
     <section class="hero">
       <div class="container hero-inner">
-        <span class="eyebrow">Frete grátis acima de R$ 299</span>
-        <h1>Tecnologia que <span class="grad">acompanha seu ritmo</span>.</h1>
-        <p class="lead">Gadgets selecionados, preço justo e entrega pra todo Brasil em até 3 dias úteis.</p>
+        <span class="eyebrow">🔥 Liquida 40% • Frete grátis &gt; R$ 299</span>
+        <h1>Tecnologia com <span class="grad">40% OFF</span> pra todo Brasil.</h1>
+        <p class="lead">Mais de 30 produtos com desconto real e pagamento em até 12x sem juros. Enviamos pros 26 estados + DF com frete calculado na hora.</p>
         <div class="hero-ctas">
-          <a href="#catalogo" class="btn btn-primary">Ver produtos</a>
-          <a href="#entrega" class="btn btn-ghost">Como funciona</a>
+          <a href="#catalogo" class="btn btn-primary">Ver promoções</a>
+          <a href="#entrega" class="btn btn-ghost">Calcular frete</a>
+        </div>
+        <div class="trust">
+          <div class="trust-item"><strong>30+</strong><span>produtos em promo</span></div>
+          <div class="trust-item"><strong>12x</strong><span>sem juros</span></div>
+          <div class="trust-item"><strong>7 dias</strong><span>pra trocar</span></div>
+          <div class="trust-item"><strong>100%</strong><span>site seguro</span></div>
         </div>
       </div>
     </section>
@@ -51,8 +70,10 @@
     <section id="catalogo" class="catalog">
       <div class="container">
         <div class="section-head">
-          <h2>Catálogo</h2>
-          <p class="muted">Escolha por categoria.</p>
+          <div>
+            <h2>Catálogo com 40% OFF</h2>
+            <p class="muted">Preço já com desconto aplicado. PIX tem <strong>5% extra off</strong>.</p>
+          </div>
         </div>
 
         <div class="filters" role="tablist" aria-label="Filtrar por categoria">
@@ -61,66 +82,190 @@
           <button class="chip" data-filter="wearables" role="tab" aria-selected="false">Wearables</button>
           <button class="chip" data-filter="perifericos" role="tab" aria-selected="false">Periféricos</button>
           <button class="chip" data-filter="mobile" role="tab" aria-selected="false">Mobile</button>
+          <button class="chip" data-filter="smart-home" role="tab" aria-selected="false">Smart Home</button>
+          <button class="chip" data-filter="computadores" role="tab" aria-selected="false">Computadores</button>
         </div>
 
         <div class="grid" id="product-grid" aria-live="polite"></div>
+        <p id="empty-state" class="muted empty" hidden>Nenhum produto encontrado com esse termo.</p>
       </div>
     </section>
 
     <section id="entrega" class="info">
-      <div class="container info-grid">
-        <article class="info-card">
-          <div class="info-icon" aria-hidden="true">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
-          </div>
-          <h3>Entrega rápida</h3>
-          <p>Despachamos no mesmo dia para pedidos até 14h.</p>
-        </article>
-        <article class="info-card">
-          <div class="info-icon" aria-hidden="true">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-          </div>
-          <h3>Garantia de 12 meses</h3>
-          <p>Todos os produtos com garantia estendida e nota fiscal.</p>
-        </article>
-        <article class="info-card" id="suporte">
-          <div class="info-icon" aria-hidden="true">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-          </div>
-          <h3>Suporte humano</h3>
-          <p>Atendimento de segunda a sábado, resposta em até 2h.</p>
-        </article>
+      <div class="container">
+        <h2 class="info-title">Por que comprar na Bora Tech?</h2>
+        <div class="info-grid">
+          <article class="info-card">
+            <div class="info-icon" aria-hidden="true">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+            </div>
+            <h3>Entrega pra todo Brasil</h3>
+            <p>Enviamos pros 26 estados + DF. Frete grátis em pedidos acima de R$ 299.</p>
+          </article>
+          <article class="info-card">
+            <div class="info-icon" aria-hidden="true">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+            </div>
+            <h3>Pagamento flexível</h3>
+            <p>PIX com 5% extra de desconto, cartão em até 12x sem juros ou boleto.</p>
+          </article>
+          <article class="info-card">
+            <div class="info-icon" aria-hidden="true">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <h3>Garantia + 7 dias</h3>
+            <p>Todos com 12 meses de garantia e direito a troca em até 7 dias.</p>
+          </article>
+          <article class="info-card">
+            <div class="info-icon" aria-hidden="true">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            </div>
+            <h3>Checkout blindado</h3>
+            <p>Pagamento processado pelo Mercado Pago com SSL, antifraude e PCI Compliance.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="faq" class="faq">
+      <div class="container">
+        <h2 class="info-title">Dúvidas frequentes</h2>
+        <details><summary>Como funciona o desconto de 40%?</summary><p>O preço exibido no catálogo já está com 40% OFF aplicado sobre o preço original (que aparece riscado). Se você pagar via PIX, ganha mais 5% de desconto no checkout.</p></details>
+        <details><summary>Para quais regiões vocês entregam?</summary><p>Enviamos pra todo o território nacional — 26 estados + DF. O prazo varia de 2 a 15 dias úteis conforme a região. Frete é grátis pra pedidos acima de R$ 299.</p></details>
+        <details><summary>Posso parcelar no cartão?</summary><p>Sim. Aceitamos todos os cartões em até 12x sem juros. No PIX você ganha 5% extra de desconto.</p></details>
+        <details><summary>Qual o prazo de entrega?</summary><p>Sudeste: 2 a 5 dias úteis. Sul: 3 a 6 dias. Centro-Oeste: 4 a 7 dias. Nordeste: 5 a 10 dias. Norte: 7 a 15 dias. O cálculo exato aparece no checkout após informar o CEP.</p></details>
+        <details><summary>E se eu não gostar do produto?</summary><p>Você tem 7 dias corridos para solicitar troca ou devolução, conforme o Código de Defesa do Consumidor. A gente paga o envio de volta.</p></details>
+        <details><summary>Como finalizo a compra?</summary><p>Clica no carrinho, preenche CEP e endereço, escolhe o método de pagamento e finaliza. Você é redirecionado ao ambiente seguro do Mercado Pago pra concluir o pagamento (cartão, PIX ou boleto). Confirmação automática por e-mail.</p></details>
+        <details><summary>É seguro comprar aqui?</summary><p>Sim. Todo o processamento de pagamento é feito pelo <strong>Mercado Pago</strong>, que utiliza criptografia SSL e é PCI Compliant. Seus dados de cartão <em>nunca</em> passam pelos nossos servidores.</p></details>
       </div>
     </section>
   </main>
 
   <footer class="site-footer">
-    <div class="container footer-inner">
-      <p>© <span id="year"></span> Bora Tech. Loja fictícia para demonstração.</p>
-      <div class="footer-links">
-        <a href="#">Termos</a>
-        <a href="#">Privacidade</a>
-        <a href="#">Contato</a>
+    <div class="container footer-grid">
+      <div>
+        <div class="logo logo-footer">
+          <span class="logo-mark" aria-hidden="true">B</span>
+          <span class="logo-text">Bora<span class="logo-accent">Tech</span></span>
+        </div>
+        <p class="muted">Tecnologia com desconto real, direto do importador pro seu endereço.</p>
       </div>
+      <div>
+        <h4>Atendimento</h4>
+        <p class="muted">Seg a Sáb, 9h às 18h<br>contato@boratech.com.br</p>
+      </div>
+      <div>
+        <h4>Pagamento</h4>
+        <div class="pay-badges">
+          <span class="pay-badge">PIX</span>
+          <span class="pay-badge">Visa</span>
+          <span class="pay-badge">Master</span>
+          <span class="pay-badge">Elo</span>
+          <span class="pay-badge">Amex</span>
+          <span class="pay-badge">Boleto</span>
+        </div>
+      </div>
+      <div>
+        <h4>Segurança</h4>
+        <div class="pay-badges">
+          <span class="pay-badge">🔒 SSL</span>
+          <span class="pay-badge">✓ Site verificado</span>
+        </div>
+      </div>
+    </div>
+    <div class="container footer-bottom">
+      <p>© <span id="year"></span> Bora Tech Comércio de Eletrônicos. CNPJ XX.XXX.XXX/0001-XX · Todos os direitos reservados.</p>
     </div>
   </footer>
 
   <aside class="cart-drawer" id="cart-drawer" aria-hidden="true" aria-label="Carrinho">
     <div class="drawer-head">
-      <h2>Seu carrinho</h2>
-      <button class="icon-btn" id="cart-close" aria-label="Fechar carrinho">
+      <h2 id="drawer-title">Seu carrinho</h2>
+      <button class="icon-btn" id="cart-close" aria-label="Fechar">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
     </div>
-    <div class="drawer-body" id="cart-items"></div>
+
+    <div class="stepper" id="stepper" aria-hidden="true">
+      <div class="step is-active" data-step="1"><span>1</span>Carrinho</div>
+      <div class="step" data-step="2"><span>2</span>Entrega</div>
+      <div class="step" data-step="3"><span>3</span>Pagamento</div>
+    </div>
+
+    <div class="drawer-body">
+      <!-- Step 1: itens -->
+      <section class="step-panel is-active" data-panel="1">
+        <div id="cart-items"></div>
+      </section>
+
+      <!-- Step 2: entrega -->
+      <section class="step-panel" data-panel="2">
+        <h3>Onde entregar?</h3>
+        <label class="field">
+          <span>CEP</span>
+          <div class="cep-row">
+            <input id="cep" inputmode="numeric" maxlength="9" placeholder="00000-000" autocomplete="postal-code" />
+            <button type="button" class="btn btn-ghost btn-sm" id="cep-btn">Calcular</button>
+          </div>
+          <small class="hint" id="cep-hint">Frete grátis em pedidos acima de R$ 299.</small>
+        </label>
+        <div id="shipping-result" class="shipping-box" hidden></div>
+
+        <div class="field-grid">
+          <label class="field"><span>Nome completo</span><input id="buyer-name" autocomplete="name" /></label>
+          <label class="field"><span>WhatsApp</span><input id="buyer-phone" inputmode="tel" placeholder="(11) 99999-9999" autocomplete="tel" /></label>
+          <label class="field col-2"><span>Rua</span><input id="addr-street" autocomplete="address-line1" /></label>
+          <label class="field"><span>Número</span><input id="addr-number" /></label>
+          <label class="field"><span>Complemento</span><input id="addr-complement" placeholder="opcional" /></label>
+          <label class="field"><span>Bairro</span><input id="addr-neighborhood" /></label>
+          <label class="field"><span>Cidade</span><input id="addr-city" /></label>
+          <label class="field"><span>Estado</span><input id="addr-state" maxlength="2" placeholder="SP" /></label>
+        </div>
+      </section>
+
+      <!-- Step 3: pagamento -->
+      <section class="step-panel" data-panel="3">
+        <h3>Como prefere pagar?</h3>
+        <div class="pay-options" role="radiogroup" aria-label="Forma de pagamento">
+          <label class="pay-opt">
+            <input type="radio" name="pay" value="pix" checked />
+            <div>
+              <div class="pay-opt-head"><strong>PIX</strong><span class="badge-green">-5%</span></div>
+              <small>Aprovação imediata. Você recebe o QR code na tela de pagamento.</small>
+            </div>
+          </label>
+          <label class="pay-opt">
+            <input type="radio" name="pay" value="credit" />
+            <div>
+              <div class="pay-opt-head"><strong>Cartão de crédito</strong><span class="badge-blue">12x sem juros</span></div>
+              <small>Visa, Master, Elo, Amex, Hipercard e outras bandeiras.</small>
+            </div>
+          </label>
+          <label class="pay-opt">
+            <input type="radio" name="pay" value="boleto" />
+            <div>
+              <div class="pay-opt-head"><strong>Boleto</strong><span class="badge-green">-3%</span></div>
+              <small>Compensação em até 2 dias úteis.</small>
+            </div>
+          </label>
+        </div>
+        <p class="secure-note">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          Pagamento processado pelo <strong>Mercado Pago</strong> com criptografia SSL.
+        </p>
+        </div>
+
+        <div class="summary" id="summary"></div>
+      </section>
+    </div>
+
     <div class="drawer-foot">
-      <div class="total-row">
-        <span>Total</span>
-        <strong id="cart-total">R$ 0,00</strong>
-      </div>
-      <button class="btn btn-primary btn-block" id="checkout">Finalizar compra</button>
+      <button class="btn-ghost btn-sm btn-link" id="back-btn" hidden>← Voltar</button>
+      <button class="btn btn-primary btn-block" id="next-btn">Continuar</button>
+      <p class="mp-note" id="mp-note" hidden>Ao finalizar, você é redirecionado pro ambiente seguro do Mercado Pago.</p>
     </div>
   </aside>
+
   <div class="scrim" id="scrim" hidden></div>
 
   <dialog id="confirm-dialog" class="dialog">
@@ -128,9 +273,9 @@
       <div class="dialog-icon" aria-hidden="true">
         <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
       </div>
-      <h3>Pedido confirmado!</h3>
-      <p class="muted">Isto é uma demo — nenhum pedido foi realmente processado. Obrigado por testar.</p>
-      <button class="btn btn-primary" id="dialog-close">Fechar</button>
+      <h3 id="dialog-title">Redirecionando para o pagamento…</h3>
+      <p class="muted" id="dialog-msg">Você está sendo levado ao ambiente seguro do Mercado Pago.</p>
+      <button class="btn btn-primary" id="dialog-close" hidden>Fechar</button>
     </div>
   </dialog>
 
