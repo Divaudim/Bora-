@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bora Tech — Loja de eletrônicos</title>
+  <meta name="description" content="Bora Tech: os melhores gadgets, fones, teclados e acessórios com entrega rápida." />
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="#" class="logo" aria-label="Bora Tech — início">
+        <span class="logo-mark" aria-hidden="true">B</span>
+        <span class="logo-text">Bora<span class="logo-accent">Tech</span></span>
+      </a>
+
+      <nav class="nav" aria-label="Principal">
+        <a href="#catalogo">Catálogo</a>
+        <a href="#entrega">Entrega</a>
+        <a href="#suporte">Suporte</a>
+      </nav>
+
+      <button class="cart-button" id="cart-open" aria-label="Abrir carrinho">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+          <path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/>
+        </svg>
+        <span class="cart-count" id="cart-count" aria-live="polite">0</span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-inner">
+        <span class="eyebrow">Frete grátis acima de R$ 299</span>
+        <h1>Tecnologia que <span class="grad">acompanha seu ritmo</span>.</h1>
+        <p class="lead">Gadgets selecionados, preço justo e entrega pra todo Brasil em até 3 dias úteis.</p>
+        <div class="hero-ctas">
+          <a href="#catalogo" class="btn btn-primary">Ver produtos</a>
+          <a href="#entrega" class="btn btn-ghost">Como funciona</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="catalogo" class="catalog">
+      <div class="container">
+        <div class="section-head">
+          <h2>Catálogo</h2>
+          <p class="muted">Escolha por categoria.</p>
+        </div>
+
+        <div class="filters" role="tablist" aria-label="Filtrar por categoria">
+          <button class="chip is-active" data-filter="all" role="tab" aria-selected="true">Tudo</button>
+          <button class="chip" data-filter="audio" role="tab" aria-selected="false">Áudio</button>
+          <button class="chip" data-filter="wearables" role="tab" aria-selected="false">Wearables</button>
+          <button class="chip" data-filter="perifericos" role="tab" aria-selected="false">Periféricos</button>
+          <button class="chip" data-filter="mobile" role="tab" aria-selected="false">Mobile</button>
+        </div>
+
+        <div class="grid" id="product-grid" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <section id="entrega" class="info">
+      <div class="container info-grid">
+        <article class="info-card">
+          <div class="info-icon" aria-hidden="true">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+          </div>
+          <h3>Entrega rápida</h3>
+          <p>Despachamos no mesmo dia para pedidos até 14h.</p>
+        </article>
+        <article class="info-card">
+          <div class="info-icon" aria-hidden="true">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <h3>Garantia de 12 meses</h3>
+          <p>Todos os produtos com garantia estendida e nota fiscal.</p>
+        </article>
+        <article class="info-card" id="suporte">
+          <div class="info-icon" aria-hidden="true">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          </div>
+          <h3>Suporte humano</h3>
+          <p>Atendimento de segunda a sábado, resposta em até 2h.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© <span id="year"></span> Bora Tech. Loja fictícia para demonstração.</p>
+      <div class="footer-links">
+        <a href="#">Termos</a>
+        <a href="#">Privacidade</a>
+        <a href="#">Contato</a>
+      </div>
+    </div>
+  </footer>
+
+  <aside class="cart-drawer" id="cart-drawer" aria-hidden="true" aria-label="Carrinho">
+    <div class="drawer-head">
+      <h2>Seu carrinho</h2>
+      <button class="icon-btn" id="cart-close" aria-label="Fechar carrinho">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="drawer-body" id="cart-items"></div>
+    <div class="drawer-foot">
+      <div class="total-row">
+        <span>Total</span>
+        <strong id="cart-total">R$ 0,00</strong>
+      </div>
+      <button class="btn btn-primary btn-block" id="checkout">Finalizar compra</button>
+    </div>
+  </aside>
+  <div class="scrim" id="scrim" hidden></div>
+
+  <dialog id="confirm-dialog" class="dialog">
+    <div class="dialog-body">
+      <div class="dialog-icon" aria-hidden="true">
+        <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+      </div>
+      <h3>Pedido confirmado!</h3>
+      <p class="muted">Isto é uma demo — nenhum pedido foi realmente processado. Obrigado por testar.</p>
+      <button class="btn btn-primary" id="dialog-close">Fechar</button>
+    </div>
+  </dialog>
+
+  <script src="script.js"></script>
+</body>
+</html>
