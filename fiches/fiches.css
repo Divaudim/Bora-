@@ -1,0 +1,199 @@
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: #e9ecef;
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  color: #111;
+  font-size: 12px;
+}
+
+.fiche {
+  width: 210mm;
+  min-height: 297mm;
+  margin: 20px auto;
+  background: #fff;
+  padding: 18mm 16mm;
+  box-shadow: 0 4px 20px rgba(0,0,0,.08);
+  position: relative;
+}
+
+.fiche-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-bottom: 2px solid #111;
+  padding-bottom: 10px;
+}
+
+.employer-block .employer-name {
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: .5px;
+  color: #b8232a;
+}
+
+.employer-block .employer-sub {
+  font-size: 11px;
+  color: #444;
+  line-height: 1.5;
+  margin-top: 4px;
+}
+
+.doc-meta {
+  text-align: right;
+  font-size: 11px;
+}
+
+.doc-meta .doc-title {
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #111;
+  margin-bottom: 6px;
+}
+
+.doc-meta .meta-row {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+}
+
+.doc-meta .meta-row span {
+  color: #666;
+}
+
+.doc-meta .meta-row strong {
+  min-width: 110px;
+  text-align: left;
+}
+
+h2.section {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: #fff;
+  background: #111;
+  padding: 5px 10px;
+  margin: 18px 0 8px;
+}
+
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px 24px;
+  border: 1px solid #ccc;
+  padding: 10px 12px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.field label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  color: #666;
+}
+
+.field .val {
+  font-size: 12px;
+  font-weight: 600;
+  color: #111;
+}
+
+.field .mono {
+  font-family: "Courier New", monospace;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+table.payroll {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 4px;
+  font-size: 11.5px;
+}
+
+table.payroll th,
+table.payroll td {
+  border: 1px solid #c5c5c5;
+  padding: 6px 8px;
+  text-align: left;
+}
+
+table.payroll thead th {
+  background: #f1f1f1;
+  text-transform: uppercase;
+  font-size: 10px;
+  letter-spacing: .6px;
+}
+
+table.payroll td.num,
+table.payroll th.num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+table.payroll tr.sub td {
+  background: #fafafa;
+  font-weight: 600;
+}
+
+table.payroll tr.total td {
+  background: #111;
+  color: #fff;
+  font-weight: 800;
+  font-size: 13px;
+}
+
+.foot {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 28px;
+  gap: 40px;
+}
+
+.sign-box {
+  flex: 1;
+  border-top: 1px solid #111;
+  padding-top: 6px;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: .8px;
+  color: #555;
+}
+
+.legal {
+  margin-top: 22px;
+  padding-top: 10px;
+  border-top: 1px solid #ddd;
+  font-size: 9.5px;
+  color: #666;
+  line-height: 1.5;
+}
+
+.stamp {
+  position: absolute;
+  right: 20mm;
+  bottom: 40mm;
+  border: 2px solid #b8232a;
+  color: #b8232a;
+  padding: 6px 14px;
+  font-weight: 800;
+  font-size: 12px;
+  letter-spacing: 2px;
+  transform: rotate(-8deg);
+  opacity: .75;
+}
+
+@media print {
+  html, body { background: #fff; }
+  .fiche { margin: 0; box-shadow: none; }
+  @page { size: A4; margin: 0; }
+}
