@@ -1,60 +1,69 @@
 // ============================================================
-// Bora Tech — loja estática com checkout Mercado Pago
+// Bora Figurinhas — loja de figurinhas da Copa 2026
+// Frontend estático + checkout via Mercado Pago
 // ============================================================
 
 const IMG = (kw, lock) =>
   `https://loremflickr.com/600/600/${encodeURIComponent(kw)}?lock=${lock}`;
 
-// 30 produtos, todos com 40% OFF aplicado (price = old * 0.6)
+// 28 itens da coleção da Copa 2026.
+// Categorias: pacotinhos · albuns · especiais · kits · acessorios
 const PRODUCTS = [
-  { id:'p1',  name:'Fone Over-Ear Pulse X',     category:'audio',        old: 899,  price: 539.40, kw:'headphones,black',       lock:101, tag:'Wireless',       rating:4.8, reviews:1240, badge:'bestseller' },
-  { id:'p2',  name:'Earbuds Nimbus Pro',        category:'audio',        old: 549,  price: 329.40, kw:'earbuds,white',          lock:102, tag:'Bluetooth 5.3',  rating:4.7, reviews:892,  badge:null         },
-  { id:'p3',  name:'Caixa de Som Nova 200W',    category:'audio',        old:1299,  price: 779.40, kw:'bluetooth,speaker',      lock:103, tag:'200W RMS',       rating:4.6, reviews:430,  badge:null         },
-  { id:'p4',  name:'Soundbar Boreal 2.1',       category:'audio',        old:1499,  price: 899.40, kw:'soundbar,tv',            lock:104, tag:'Dolby Atmos',    rating:4.5, reviews:218,  badge:'new'        },
-  { id:'p5',  name:'Fone Gamer Titan HP',       category:'audio',        old: 699,  price: 419.40, kw:'gaming,headset',         lock:105, tag:'7.1 Surround',   rating:4.7, reviews:1580, badge:'bestseller' },
-  { id:'p6',  name:'Microfone USB Dynamo',      category:'audio',        old: 599,  price: 359.40, kw:'microphone,studio',      lock:106, tag:'Cardióide',      rating:4.8, reviews:342,  badge:null         },
-  { id:'p7',  name:'Smartwatch Orbit 3',        category:'wearables',    old:1799,  price:1079.40, kw:'smartwatch,black',       lock:107, tag:'GPS + SpO2',     rating:4.8, reviews:2103, badge:'bestseller' },
-  { id:'p8',  name:'Pulseira Fit Lite',         category:'wearables',    old: 349,  price: 209.40, kw:'fitness,band',           lock:108, tag:'14 dias bateria',rating:4.5, reviews:678,  badge:null         },
-  { id:'p9',  name:'Smartwatch Solar Edge',     category:'wearables',    old:2499,  price:1499.40, kw:'smartwatch,sport',       lock:109, tag:'Carregamento solar', rating:4.9, reviews:544, badge:'new'   },
-  { id:'p10', name:'Anel Inteligente Ring Zero',category:'wearables',    old:1299,  price: 779.40, kw:'smart,ring',             lock:110, tag:'Monitor de sono',rating:4.4, reviews:192,  badge:'new'        },
-  { id:'p11', name:'Óculos Smart AR View',      category:'wearables',    old:2199,  price:1319.40, kw:'smart,glasses',          lock:111, tag:'Realidade aumentada', rating:4.3, reviews:88, badge:'new'   },
-  { id:'p12', name:'Teclado Mecânico K75',      category:'perifericos',  old: 679,  price: 407.40, kw:'mechanical,keyboard',    lock:112, tag:'Hot-swap RGB',   rating:4.8, reviews:1022, badge:'bestseller' },
-  { id:'p13', name:'Mouse Gamer Zen 8K',        category:'perifericos',  old: 389,  price: 233.40, kw:'gaming,mouse',           lock:113, tag:'8000 DPI',       rating:4.7, reviews:2341, badge:'bestseller' },
-  { id:'p14', name:'Monitor UltraWide 34"',     category:'perifericos',  old:3299,  price:1979.40, kw:'ultrawide,monitor',      lock:114, tag:'144Hz / 1ms',    rating:4.9, reviews:412,  badge:null         },
-  { id:'p15', name:'Monitor 4K 27"',            category:'perifericos',  old:2499,  price:1499.40, kw:'4k,monitor',             lock:115, tag:'IPS HDR400',     rating:4.8, reviews:689,  badge:null         },
-  { id:'p16', name:'Webcam Ultra 4K',           category:'perifericos',  old: 499,  price: 299.40, kw:'webcam,camera',          lock:116, tag:'4K com autofoco',rating:4.5, reviews:278,  badge:null         },
-  { id:'p17', name:'Mousepad XXL RGB',          category:'perifericos',  old: 199,  price: 119.40, kw:'mousepad,rgb',           lock:117, tag:'900x400mm',      rating:4.7, reviews:933,  badge:null         },
-  { id:'p18', name:'Suporte Monitor Dual',      category:'perifericos',  old: 449,  price: 269.40, kw:'monitor,arm',            lock:118, tag:'Articulável',    rating:4.6, reviews:154,  badge:null         },
-  { id:'p19', name:'Headset Wireless Pro',      category:'perifericos',  old: 899,  price: 539.40, kw:'wireless,headset',       lock:119, tag:'Dual Mic',       rating:4.7, reviews:812,  badge:null         },
-  { id:'p20', name:'Smartphone Nova S',         category:'mobile',       old:2599,  price:1559.40, kw:'smartphone,modern',      lock:120, tag:'5G · 256GB',     rating:4.6, reviews:1842, badge:'bestseller' },
-  { id:'p21', name:'Carregador GaN 65W',        category:'mobile',       old: 199,  price: 119.40, kw:'charger,usb-c',          lock:121, tag:'USB-C / PD',     rating:4.9, reviews:2210, badge:null         },
-  { id:'p22', name:'Powerbank 20K mAh',         category:'mobile',       old: 299,  price: 179.40, kw:'powerbank,battery',      lock:122, tag:'Carga rápida',   rating:4.7, reviews:1344, badge:null         },
-  { id:'p23', name:'Cabo USB-C Trançado 2m',    category:'mobile',       old:  79,  price:  47.40, kw:'usb,cable',              lock:123, tag:'100W PD',        rating:4.8, reviews:1876, badge:null         },
-  { id:'p24', name:'Suporte Veicular Mag',      category:'mobile',       old: 149,  price:  89.40, kw:'car,mount',              lock:124, tag:'MagSafe',        rating:4.5, reviews:421,  badge:null         },
-  { id:'p25', name:'Lâmpada Smart RGB',         category:'smart-home',   old:  99,  price:  59.40, kw:'smart,bulb',             lock:125, tag:'Wi-Fi + Alexa',  rating:4.4, reviews:2890, badge:null         },
-  { id:'p26', name:'Câmera Wi-Fi 360°',         category:'smart-home',   old: 399,  price: 239.40, kw:'security,camera',        lock:126, tag:'Visão noturna',  rating:4.6, reviews:712,  badge:null         },
-  { id:'p27', name:'Assistente Echo Tune',      category:'smart-home',   old: 499,  price: 299.40, kw:'smart,speaker',          lock:127, tag:'Controle por voz',rating:4.5, reviews:987, badge:null         },
-  { id:'p28', name:'Controle Gamer Stratos',    category:'perifericos',  old: 349,  price: 209.40, kw:'game,controller',        lock:128, tag:'Wireless Hall', rating:4.7, reviews:512,  badge:null         },
-  { id:'p29', name:'Notebook Ultra Pro 14"',    category:'computadores', old:5999,  price:3599.40, kw:'laptop,ultrabook',       lock:129, tag:'16GB / 512GB',   rating:4.8, reviews:289,  badge:'new'        },
-  { id:'p30', name:'Tablet Slate 11"',          category:'computadores', old:2299,  price:1379.40, kw:'tablet,modern',          lock:130, tag:'128GB · 120Hz',  rating:4.6, reviews:344,  badge:null         },
+  // ── Pacotinhos ────────────────────────────────────────────────────
+  { id:'p01', name:'Pacotinho c/ 5 figurinhas',           category:'pacotinhos', old:   7.90, price:   4.99, kw:'soccer,sticker,pack',     lock:201, tag:'5 figurinhas',          rating:4.8, reviews:5230, badge:'bestseller' },
+  { id:'p02', name:'Caixinha c/ 5 pacotinhos',            category:'pacotinhos', old:  39.50, price:  24.90, kw:'soccer,trading,cards',    lock:202, tag:'25 figurinhas',         rating:4.8, reviews:1842, badge:null         },
+  { id:'p03', name:'Caixa fechada · 50 pacotinhos',       category:'pacotinhos', old: 395.00, price: 249.90, kw:'soccer,box,cards',        lock:203, tag:'250 figurinhas',        rating:4.9, reviews: 980, badge:'bestseller' },
+  { id:'p04', name:'Box display · 100 pacotinhos',        category:'pacotinhos', old: 790.00, price: 499.90, kw:'football,collection',     lock:204, tag:'500 figurinhas',        rating:4.9, reviews: 412, badge:null         },
+  { id:'p05', name:'Caixa especial Lendas · 30 pacotinhos', category:'pacotinhos', old: 290.00, price: 189.90, kw:'soccer,legends,gold',   lock:205, tag:'+1 lenda garantida',    rating:4.9, reviews: 226, badge:'new'        },
+
+  // ── Álbuns ────────────────────────────────────────────────────────
+  { id:'p06', name:'Álbum oficial capa mole',             category:'albuns',     old:  44.90, price:  29.90, kw:'sticker,album,soccer',    lock:210, tag:'Capa mole',             rating:4.7, reviews:3120, badge:'bestseller' },
+  { id:'p07', name:'Álbum oficial capa dura',             category:'albuns',     old: 129.90, price:  89.90, kw:'sticker,album,hardcover', lock:211, tag:'Capa dura',             rating:4.9, reviews:2210, badge:null         },
+  { id:'p08', name:'Álbum dourado edição limitada',       category:'albuns',     old: 299.90, price: 199.90, kw:'gold,album,book',         lock:212, tag:'Edição limitada',       rating:5.0, reviews: 318, badge:'new'        },
+  { id:'p09', name:'Álbum capa dura + 10 figurinhas',     category:'albuns',     old: 149.90, price: 109.90, kw:'soccer,scrapbook',        lock:213, tag:'Brinde inclusos',       rating:4.8, reviews: 884, badge:null         },
+
+  // ── Lendas & Raras (especiais) ────────────────────────────────────
+  { id:'p10', name:'Figurinha Lenda · #10 Argentino',     category:'especiais',  old:  79.90, price:  49.90, kw:'argentina,soccer,star',   lock:220, tag:'Lenda holográfica',     rating:4.9, reviews:1108, badge:'bestseller' },
+  { id:'p11', name:'Figurinha Lenda · #7 Francês',        category:'especiais',  old:  79.90, price:  49.90, kw:'france,soccer,striker',   lock:221, tag:'Lenda holográfica',     rating:4.8, reviews: 942, badge:null         },
+  { id:'p12', name:'Figurinha Lenda · #10 Brasileiro',    category:'especiais',  old:  79.90, price:  49.90, kw:'brazil,soccer,player',    lock:222, tag:'Lenda holográfica',     rating:4.9, reviews:2334, badge:'bestseller' },
+  { id:'p13', name:'Figurinha Lenda · Camisa 7 amarela',  category:'especiais',  old:  79.90, price:  49.90, kw:'brazil,striker,yellow',   lock:223, tag:'Lenda holográfica',     rating:4.8, reviews:1450, badge:null         },
+  { id:'p14', name:'Figurinha Lenda · #9 Norueguês',      category:'especiais',  old:  79.90, price:  49.90, kw:'norway,soccer,goal',      lock:224, tag:'Lenda holográfica',     rating:4.7, reviews: 612, badge:null         },
+  { id:'p15', name:'Figurinha Eterna · O Rei',            category:'especiais',  old: 159.90, price:  99.90, kw:'pele,brazil,vintage',     lock:225, tag:'Eterna · ouro',         rating:5.0, reviews: 488, badge:'new'        },
+  { id:'p16', name:'Figurinha Eterna · El Diez',          category:'especiais',  old: 159.90, price:  99.90, kw:'maradona,argentina',      lock:226, tag:'Eterna · ouro',         rating:5.0, reviews: 392, badge:'new'        },
+  { id:'p17', name:'Escudo dourado da Seleção Brasileira',category:'especiais',  old:  59.90, price:  39.90, kw:'brazil,crest,badge',      lock:227, tag:'Foil dourado',          rating:4.8, reviews: 711, badge:null         },
+  { id:'p18', name:'Mascote oficial holográfica',         category:'especiais',  old:  39.90, price:  24.90, kw:'mascot,soccer,2026',      lock:228, tag:'Holográfica',           rating:4.7, reviews: 503, badge:null         },
+  { id:'p19', name:'Set 32 escudos das seleções',         category:'especiais',  old: 119.90, price:  79.90, kw:'national,team,badge',     lock:229, tag:'32 escudos',            rating:4.8, reviews: 274, badge:null         },
+
+  // ── Kits ──────────────────────────────────────────────────────────
+  { id:'p20', name:'Kit Iniciante: álbum + 10 pacotinhos',category:'kits',       old: 129.90, price:  79.90, kw:'soccer,album,starter',    lock:240, tag:'Álbum + 50 figurinhas', rating:4.8, reviews:1442, badge:'bestseller' },
+  { id:'p21', name:'Kit Colecionador: capa dura + 50 pacotinhos', category:'kits', old: 559.90, price: 339.90, kw:'collection,box,album', lock:241, tag:'Capa dura + 250',       rating:4.9, reviews: 612, badge:null         },
+  { id:'p22', name:'Kit Premium: dourado + 100 pacotinhos', category:'kits',     old:1099.90, price: 699.90, kw:'premium,gold,collector',  lock:242, tag:'Edição dourada + 500',  rating:5.0, reviews: 188, badge:'new'        },
+  { id:'p23', name:'Kit Família: 2 álbuns + 60 pacotinhos', category:'kits',     old: 459.90, price: 289.90, kw:'family,album,sticker',    lock:243, tag:'2 álbuns + 300',        rating:4.8, reviews: 244, badge:null         },
+
+  // ── Acessórios ────────────────────────────────────────────────────
+  { id:'p24', name:'Plástico protetor (pacote c/ 50)',    category:'acessorios', old:  29.90, price:  19.90, kw:'plastic,sleeve',          lock:250, tag:'Anti-amassado',         rating:4.8, reviews:1820, badge:null         },
+  { id:'p25', name:'Porta-figurinhas com 60 espaços',     category:'acessorios', old:  59.90, price:  39.90, kw:'binder,trading,card',     lock:251, tag:'Capa zíper',            rating:4.7, reviews: 952, badge:null         },
+  { id:'p26', name:'Caderno organizador de repetidas',    category:'acessorios', old:  39.90, price:  24.90, kw:'notebook,organizer',      lock:252, tag:'Lista p/ trocas',       rating:4.6, reviews: 416, badge:null         },
+  { id:'p27', name:'Tapete de troca emborrachado',        category:'acessorios', old:  49.90, price:  29.90, kw:'mat,playmat,green',       lock:253, tag:'60 × 40 cm',            rating:4.7, reviews: 322, badge:null         },
+  { id:'p28', name:'Display acrílico p/ figurinha lenda', category:'acessorios', old: 119.90, price:  89.90, kw:'acrylic,display,frame',   lock:254, tag:'Vitrine premium',       rating:4.9, reviews: 178, badge:'new'        },
 ];
 
 // Frete por UF — cobre 26 estados + DF
 const FRETE_POR_UF = {
-  SP:{v:19.90, p:'2-3 dias úteis'},
-  RJ:{v:29.90, p:'3-5 dias úteis'}, MG:{v:29.90, p:'3-5 dias úteis'}, ES:{v:29.90, p:'3-5 dias úteis'},
-  PR:{v:29.90, p:'3-5 dias úteis'}, SC:{v:32.90, p:'3-6 dias úteis'}, RS:{v:34.90, p:'4-7 dias úteis'},
-  DF:{v:34.90, p:'4-6 dias úteis'}, GO:{v:34.90, p:'4-6 dias úteis'},
-  MT:{v:44.90, p:'5-8 dias úteis'}, MS:{v:44.90, p:'5-8 dias úteis'},
-  BA:{v:39.90, p:'5-8 dias úteis'}, SE:{v:39.90, p:'5-8 dias úteis'},
-  AL:{v:44.90, p:'6-9 dias úteis'}, PE:{v:44.90, p:'6-9 dias úteis'},
-  PB:{v:44.90, p:'6-9 dias úteis'}, RN:{v:44.90, p:'6-9 dias úteis'},
-  CE:{v:49.90, p:'7-10 dias úteis'}, PI:{v:49.90, p:'7-10 dias úteis'}, MA:{v:49.90, p:'7-10 dias úteis'},
-  TO:{v:54.90, p:'7-10 dias úteis'}, PA:{v:54.90, p:'7-10 dias úteis'},
-  AM:{v:59.90, p:'10-15 dias úteis'}, RO:{v:59.90, p:'10-15 dias úteis'}, AC:{v:59.90, p:'10-15 dias úteis'},
-  AP:{v:64.90, p:'12-18 dias úteis'}, RR:{v:64.90, p:'12-18 dias úteis'},
+  SP:{v:14.90, p:'2-3 dias úteis'},
+  RJ:{v:19.90, p:'3-5 dias úteis'}, MG:{v:19.90, p:'3-5 dias úteis'}, ES:{v:19.90, p:'3-5 dias úteis'},
+  PR:{v:19.90, p:'3-5 dias úteis'}, SC:{v:22.90, p:'3-6 dias úteis'}, RS:{v:24.90, p:'4-7 dias úteis'},
+  DF:{v:24.90, p:'4-6 dias úteis'}, GO:{v:24.90, p:'4-6 dias úteis'},
+  MT:{v:34.90, p:'5-8 dias úteis'}, MS:{v:34.90, p:'5-8 dias úteis'},
+  BA:{v:29.90, p:'5-8 dias úteis'}, SE:{v:29.90, p:'5-8 dias úteis'},
+  AL:{v:34.90, p:'6-9 dias úteis'}, PE:{v:34.90, p:'6-9 dias úteis'},
+  PB:{v:34.90, p:'6-9 dias úteis'}, RN:{v:34.90, p:'6-9 dias úteis'},
+  CE:{v:39.90, p:'7-10 dias úteis'}, PI:{v:39.90, p:'7-10 dias úteis'}, MA:{v:39.90, p:'7-10 dias úteis'},
+  TO:{v:44.90, p:'7-10 dias úteis'}, PA:{v:44.90, p:'7-10 dias úteis'},
+  AM:{v:49.90, p:'10-15 dias úteis'}, RO:{v:49.90, p:'10-15 dias úteis'}, AC:{v:49.90, p:'10-15 dias úteis'},
+  AP:{v:54.90, p:'12-18 dias úteis'}, RR:{v:54.90, p:'12-18 dias úteis'},
 };
-const FRETE_GRATIS_ACIMA = 299;
+const FRETE_GRATIS_ACIMA = 199;
 
 // ============================================================
 // Helpers
@@ -72,8 +81,8 @@ const stars = r => {
 // ============================================================
 // Estado
 // ============================================================
-const CART_KEY = 'bora.cart.v2';
-const STATE_KEY = 'bora.checkout.v2';
+const CART_KEY = 'bora.figurinhas.cart.v1';
+const STATE_KEY = 'bora.figurinhas.checkout.v1';
 const loadCart = () => { try { return JSON.parse(localStorage.getItem(CART_KEY)) || {}; } catch { return {}; } };
 const saveCart = c => localStorage.setItem(CART_KEY, JSON.stringify(c));
 const loadState = () => { try { return JSON.parse(localStorage.getItem(STATE_KEY)) || {}; } catch { return {}; } };
@@ -109,11 +118,12 @@ function renderGrid() {
   gridEl.innerHTML = items.map(p => {
     const parcela = (p.price / 12).toFixed(2).replace('.', ',');
     const pix = p.price * 0.95;
+    const desc = Math.round((1 - p.price / p.old) * 100);
     const badge = p.badge === 'bestseller'
       ? '<span class="card-badge bestseller">Mais vendido</span>'
       : p.badge === 'new'
-        ? '<span class="card-badge new">Novo</span>'
-        : '<span class="card-badge">-40%</span>';
+        ? '<span class="card-badge new">Novidade</span>'
+        : `<span class="card-badge">-${desc}%</span>`;
     return `
       <article class="card reveal" data-id="${p.id}">
         <div class="card-media">
@@ -249,7 +259,7 @@ function updateCartUI() {
   cartCountEl.textContent = count;
 
   if (entries.length === 0) {
-    cartItemsEl.innerHTML = '<div class="drawer-empty">Seu carrinho está vazio.<br>Adicione produtos do catálogo.</div>';
+    cartItemsEl.innerHTML = '<div class="drawer-empty">Seu carrinho está vazio.<br>Escolha pacotinhos, álbuns ou figurinhas raras.</div>';
   } else {
     cartItemsEl.innerHTML = entries.map(([id, qty]) => {
       const p = PRODUCTS.find(x => x.id === id);
@@ -453,7 +463,6 @@ async function submitCheckout() {
     }
     const data = await resp.json();
     if (!data.init_point) throw new Error('Resposta do servidor sem init_point.');
-    // limpa carrinho e redireciona
     cart = {};
     saveCart(cart);
     window.location.href = data.init_point;

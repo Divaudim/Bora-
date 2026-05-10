@@ -1,6 +1,6 @@
-# Bora Tech
+# Bora Figurinhas
 
-Loja de eletrônicos com 40% OFF, frete para todo Brasil e checkout integrado ao **Mercado Pago**.
+Loja online de figurinhas da **Copa 2026** — pacotinhos, álbuns, lendas raras e kits, com frete pra todo Brasil e checkout integrado ao **Mercado Pago**.
 
 Frontend: HTML/CSS/JS puro (sem framework, sem build).
 Backend: uma função serverless no Vercel que cria a preferência de pagamento no Mercado Pago.
@@ -12,8 +12,8 @@ Backend: uma função serverless no Vercel que cria a preferência de pagamento 
 ```
 .
 ├── index.html               # Página única com catálogo + drawer de checkout
-├── styles.css               # Tema dark, grid, steps, badges
-├── script.js                # 30 produtos, filtros, carrinho, CEP (ViaCEP), frete BR
+├── styles.css               # Tema verde/dourado, grid, steps, badges
+├── script.js                # 28 itens (pacotinhos, álbuns, lendas, kits, acessórios), filtros, carrinho, CEP (ViaCEP), frete BR
 ├── assets/
 │   └── favicon.svg
 ├── api/
@@ -36,7 +36,7 @@ Backend: uma função serverless no Vercel que cria a preferência de pagamento 
    | Nome                 | Valor                                                    |
    |----------------------|----------------------------------------------------------|
    | `MP_ACCESS_TOKEN`    | Access Token de **Produção** do Mercado Pago (começa com `APP_USR-...`) |
-   | `SITE_URL`           | URL pública do Vercel (ex.: `https://bora-tech.vercel.app`) |
+   | `SITE_URL`           | URL pública do Vercel (ex.: `https://bora-figurinhas.vercel.app`) |
 
    Onde pegar o Access Token: https://www.mercadopago.com.br/developers/panel/app → sua aplicação → **Credenciais de Produção**.
 
@@ -52,11 +52,25 @@ Se quiser testar sem dinheiro real:
 
 ---
 
+## Catálogo
+
+5 categorias cobrindo a coleção do Mundial 2026:
+
+- **Pacotinhos** — pacotinho avulso (5 fig.), caixinha (25), caixa fechada 50 e box display 100
+- **Álbuns** — capa mole, capa dura e edição dourada limitada
+- **Lendas & Raras** — figurinhas avulsas dos craques, lendas eternas, escudos foil, mascote holográfica
+- **Kits** — combos de álbum + caixas (iniciante, colecionador, premium, família)
+- **Acessórios** — plástico protetor, porta-figurinhas, organizador, tapete, display acrílico
+
+Tudo configurado no array `PRODUCTS` no topo de `script.js`.
+
+---
+
 ## Checkout — como funciona
 
 1. Cliente monta o carrinho e clica **Finalizar**.
 2. Drawer multi-step:
-   - **Entrega**: informa CEP (autopreenche via [ViaCEP](https://viacep.com.br)), endereço, contato. Frete calculado por UF — grátis acima de R$ 299.
+   - **Entrega**: informa CEP (autopreenche via [ViaCEP](https://viacep.com.br)), endereço, contato. Frete calculado por UF — grátis acima de R$ 199.
    - **Pagamento**: escolhe PIX (-5%), cartão (12x) ou boleto (-3%).
 3. Ao clicar **Pagar com Mercado Pago**:
    - Frontend faz `POST /api/create-preference`
@@ -98,10 +112,10 @@ Pra checkout real, use o Vercel.
 
 ## Customização rápida
 
-- **Cores e tipografia**: variáveis CSS no `:root` de `styles.css`.
+- **Cores e tipografia**: variáveis CSS no `:root` de `styles.css` (verde `#16a34a`, dourado `#fbbf24`).
 - **Produtos**: array `PRODUCTS` no topo de `script.js`.
 - **Frete**: `FRETE_POR_UF` em `script.js`. Ajuste valores/prazos por estado.
-- **Desconto de 40%**: já aplicado no campo `price`. `old` é o preço cheio.
+- **Frete grátis**: `FRETE_GRATIS_ACIMA = 199` em `script.js`.
 - **Descontos PIX / boleto**: lógica em `renderSummary()` e na função serverless.
 
 ---

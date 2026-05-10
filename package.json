@@ -1,8 +1,8 @@
 {
-  "name": "bora-tech",
+  "name": "bora-figurinhas",
   "version": "1.0.0",
   "private": true,
-  "description": "Loja de eletrônicos Bora Tech — site estático + função serverless Mercado Pago",
+  "description": "Bora Figurinhas — loja de figurinhas da Copa 2026, site estático + função serverless Mercado Pago",
   "type": "module",
   "scripts": {
     "dev": "vercel dev",

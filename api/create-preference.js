@@ -2,7 +2,7 @@
 // Endpoint: POST /api/create-preference
 // Env vars necessárias:
 //   MP_ACCESS_TOKEN  → Access Token (Produção) do Mercado Pago
-//   SITE_URL         → URL pública do site (ex: https://bora-tech.vercel.app)
+//   SITE_URL         → URL pública do site (ex: https://bora-figurinhas.vercel.app)
 
 import { MercadoPagoConfig, Preference } from 'mercadopago';
 
@@ -84,7 +84,7 @@ export default async function handler(req, res) {
         failure: `${site}/?status=failure`,
       },
       auto_return: 'approved',
-      statement_descriptor: 'BORATECH',
+      statement_descriptor: 'BORAFIGURINHAS',
       external_reference: `order_${Date.now()}`,
     };
 
