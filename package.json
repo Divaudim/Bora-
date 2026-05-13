@@ -9,7 +9,8 @@
     "start": "python3 -m http.server 8000"
   },
   "dependencies": {
-    "mercadopago": "^2.0.15"
+    "mercadopago": "^2.0.15",
+    "stripe": "^17.5.0"
   },
   "engines": {
     "node": ">=18"

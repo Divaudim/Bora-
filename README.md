@@ -36,9 +36,12 @@ Backend: uma função serverless no Vercel que cria a preferência de pagamento 
    | Nome                 | Valor                                                    |
    |----------------------|----------------------------------------------------------|
    | `MP_ACCESS_TOKEN`    | Access Token de **Produção** do Mercado Pago (começa com `APP_USR-...`) |
+   | `STRIPE_SECRET_KEY`  | Chave secreta do Stripe (`sk_live_...` em produção, `sk_test_...` em testes) |
    | `SITE_URL`           | URL pública do Vercel (ex.: `https://bora-figurinhas.vercel.app`) |
 
-   Onde pegar o Access Token: https://www.mercadopago.com.br/developers/panel/app → sua aplicação → **Credenciais de Produção**.
+   Onde pegar as chaves:
+   - Mercado Pago: https://www.mercadopago.com.br/developers/panel/app → sua aplicação → **Credenciais de Produção**.
+   - Stripe: https://dashboard.stripe.com/apikeys → **Secret key**.
 
 5. **Redeploy** o projeto (Deployments → ⋯ → Redeploy) para as variáveis entrarem em vigor.
 6. Acesse a URL do Vercel. Adicione itens, finalize → você é redirecionado pra tela segura do Mercado Pago.
@@ -71,13 +74,11 @@ Tudo configurado no array `PRODUCTS` no topo de `script.js`.
 1. Cliente monta o carrinho e clica **Finalizar**.
 2. Drawer multi-step:
    - **Entrega**: informa CEP (autopreenche via [ViaCEP](https://viacep.com.br)), endereço, contato. Frete calculado por UF — grátis acima de R$ 199.
-   - **Pagamento**: escolhe PIX (-5%), cartão (12x) ou boleto (-3%).
-3. Ao clicar **Pagar com Mercado Pago**:
-   - Frontend faz `POST /api/create-preference`
-   - Função serverless chama o SDK oficial do MP com o Access Token (seguro, do servidor)
-   - MP devolve `init_point` (URL do checkout hospedado)
-   - Frontend redireciona o cliente pra essa URL
-4. Cliente paga na tela do MP (cartão, PIX, boleto) e é redirecionado de volta ao site via `back_urls`.
+   - **Pagamento**: escolhe PIX (-5% MP), cartão BR 12x (MP), boleto (-3% MP) **ou** cartão internacional (Stripe).
+3. Roteamento por método:
+   - PIX/Cartão BR/Boleto → `POST /api/create-preference` → Mercado Pago
+   - Cartão internacional → `POST /api/create-stripe-session` → Stripe Checkout
+4. A função serverless cria a sessão/preferência com a chave secreta (servidor), devolve a URL hospedada e o frontend redireciona o cliente. Depois do pagamento, o cliente volta ao site via `back_urls` / `success_url`.
 
 ---
 
@@ -94,10 +95,15 @@ python3 -m http.server 8000
 
 ```bash
 npm install
-echo 'MP_ACCESS_TOKEN=TEST-seu-token-aqui' > .env
-echo 'SITE_URL=http://localhost:3000' >> .env
+cat > .env <<'EOF'
+MP_ACCESS_TOKEN=TEST-seu-token-aqui
+STRIPE_SECRET_KEY=sk_test_seu-token-aqui
+SITE_URL=http://localhost:3000
+EOF
 npx vercel dev
 ```
+
+> Você pode configurar apenas um dos provedores: a opção correspondente no checkout só vai funcionar se a env var estiver setada.
 
 ---
 

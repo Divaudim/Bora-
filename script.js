@@ -215,7 +215,7 @@ function goToStep(n) {
 
   if (n === 1) nextBtn.textContent = 'Continuar para entrega';
   else if (n === 2) nextBtn.textContent = 'Continuar para pagamento';
-  else nextBtn.textContent = 'Pagar com Mercado Pago';
+  else nextBtn.textContent = currentPayment() === 'stripe' ? 'Pagar com Stripe' : 'Pagar com Mercado Pago';
 
   if (n === 3) renderSummary();
   updateNextBtnState();
@@ -393,7 +393,13 @@ function currentPayment() {
   const el = document.querySelector('input[name="pay"]:checked');
   return el ? el.value : 'pix';
 }
-$$('input[name="pay"]').forEach(r => r.addEventListener('change', renderSummary));
+function updateProcessorLabel() {
+  const el = $('#processor-name');
+  if (!el) return;
+  el.textContent = currentPayment() === 'stripe' ? 'Stripe' : 'Mercado Pago';
+  if (currentStep === 3) nextBtn.textContent = currentPayment() === 'stripe' ? 'Pagar com Stripe' : 'Pagar com Mercado Pago';
+}
+$$('input[name="pay"]').forEach(r => r.addEventListener('change', () => { renderSummary(); updateProcessorLabel(); }));
 
 function renderSummary() {
   const sub = subtotal();
@@ -403,12 +409,14 @@ function renderSummary() {
   const total = sub - discount + ship;
 
   const parcela = pay === 'credit' ? (total / 12) : 0;
+  const discountLabel = pay === 'pix' ? 'PIX (5%)' : pay === 'boleto' ? 'Boleto (3%)' : null;
   const lines = [
     `<div class="line"><span>Subtotal (${Object.values(cart).reduce((s,q)=>s+q,0)} itens)</span><span>${money(sub)}</span></div>`,
-    pay !== 'credit' ? `<div class="line discount"><span>Desconto ${pay === 'pix' ? 'PIX (5%)' : 'Boleto (3%)'}</span><span>-${money(discount)}</span></div>` : '',
+    discountLabel ? `<div class="line discount"><span>Desconto ${discountLabel}</span><span>-${money(discount)}</span></div>` : '',
     `<div class="line"><span>Frete ${state.shipping ? `(${state.shipping.uf})` : ''}</span><span>${state.shipping ? (state.shipping.free ? 'Grátis' : money(state.shipping.valor)) : '—'}</span></div>`,
     `<div class="line total"><span>Total</span><span>${money(total)}</span></div>`,
     pay === 'credit' ? `<div class="line"><span>12x sem juros de</span><span>${money(parcela)}</span></div>` : '',
+    pay === 'stripe' ? `<div class="line"><span>Processador</span><span>Stripe (cartão à vista)</span></div>` : '',
   ].filter(Boolean).join('');
   summaryEl.innerHTML = lines;
 }
@@ -432,18 +440,20 @@ async function submitCheckout() {
   const pay = currentPayment();
   const sub = subtotal();
   const discount = pay === 'pix' ? sub * 0.05 : pay === 'boleto' ? sub * 0.03 : 0;
+  const endpoint = pay === 'stripe' ? '/api/create-stripe-session' : '/api/create-preference';
+  const processor = pay === 'stripe' ? 'Stripe' : 'Mercado Pago';
 
   nextBtn.disabled = true;
   nextBtn.textContent = 'Processando…';
 
   dialogIcon.innerHTML = '<div class="spinner"></div>';
   dialogTitle.textContent = 'Redirecionando para o pagamento…';
-  dialogMsg.textContent = 'Você está sendo levado ao ambiente seguro do Mercado Pago.';
+  dialogMsg.textContent = `Você está sendo levado ao ambiente seguro do ${processor}.`;
   dialogClose.hidden = true;
   if (typeof dialog.showModal === 'function') dialog.showModal();
 
   try {
-    const resp = await fetch('/api/create-preference', {
+    const resp = await fetch(endpoint, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -472,7 +482,7 @@ async function submitCheckout() {
     dialogMsg.textContent = err.message || 'Tente novamente em instantes.';
     dialogClose.hidden = false;
     nextBtn.disabled = false;
-    nextBtn.textContent = 'Pagar com Mercado Pago';
+    nextBtn.textContent = currentPayment() === 'stripe' ? 'Pagar com Stripe' : 'Pagar com Mercado Pago';
   }
 }
 

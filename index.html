@@ -248,10 +248,17 @@
               <small>Compensação em até 2 dias úteis.</small>
             </div>
           </label>
+          <label class="pay-opt">
+            <input type="radio" name="pay" value="stripe" />
+            <div>
+              <div class="pay-opt-head"><strong>Cartão internacional</strong><span class="badge-blue">Stripe</span></div>
+              <small>Visa, Master, Amex — ideal pra cartões emitidos fora do Brasil.</small>
+            </div>
+          </label>
         </div>
-        <p class="secure-note">
+        <p class="secure-note" id="secure-note">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-          Pagamento processado pelo <strong>Mercado Pago</strong> com criptografia SSL.
+          Pagamento processado pelo <strong id="processor-name">Mercado Pago</strong> com criptografia SSL.
         </p>
 
         <div class="summary" id="summary"></div>
